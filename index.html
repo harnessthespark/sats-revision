@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sylvie's SATs Revision</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #fce4ec;
+            min-height: 100vh;
+            color: #5d3a4a;
+            overflow-x: hidden;
+        }
+
+        .deco { position: fixed; font-size: 24px; opacity: 0.5; pointer-events: none; animation: float 6s ease-in-out infinite; }
+        .deco:nth-child(1) { top: 8%; left: 3%; animation-delay: 0s; }
+        .deco:nth-child(2) { top: 15%; right: 8%; animation-delay: 1s; }
+        .deco:nth-child(3) { top: 45%; left: 2%; animation-delay: 2s; }
+        .deco:nth-child(4) { top: 70%; right: 5%; animation-delay: 3s; }
+        .deco:nth-child(5) { top: 85%; left: 10%; animation-delay: 4s; }
+        .deco:nth-child(6) { top: 30%; right: 3%; animation-delay: 0.5s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: 2em; font-weight: 800; color: #6d3a5a; }
+        .header .subtitle { font-size: 0.9em; color: #b06888; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #fff; border: 2px solid #e8b4c8; border-radius: 20px;
+            padding: 8px 18px; font-family: 'Nunito', sans-serif; font-weight: 700;
+            font-size: 0.95em; color: #6d3a5a; cursor: pointer; margin-bottom: 15px; transition: all 0.2s;
+        }
+        .back-btn:hover { background: #f8d7e6; transform: scale(1.03); }
+
+        .progress-section { text-align: center; margin-bottom: 25px; }
+        .progress-bar-outer { width: 100%; height: 14px; background: #f5c6d6; border-radius: 10px; overflow: hidden; margin-bottom: 6px; }
+        .progress-bar-inner { height: 100%; background: linear-gradient(90deg, #e88aab, #d46a8c); border-radius: 10px; transition: width 0.5s ease; width: 0%; }
+        .progress-text { font-size: 0.85em; color: #b06888; }
+
+        /* ===== OCTO-BUDDY ===== */
+        .octo-section {
+            text-align: center; margin-bottom: 20px;
+            background: #fff; border: 2px solid #f0d0de; border-radius: 20px; padding: 20px;
+        }
+        .octo-container { position: relative; display: inline-block; transition: transform 0.5s ease; }
+        .octo-body {
+            position: relative; display: inline-block;
+            transition: all 0.5s ease;
+        }
+        .octo-svg { transition: all 0.5s ease; }
+        .octo-name { font-weight: 800; font-size: 1.1em; color: #6d3a5a; margin-top: 8px; }
+        .octo-level { font-size: 0.85em; color: #b06888; }
+        .octo-xp-bar { width: 200px; margin: 8px auto 0; height: 10px; background: #f5d0de; border-radius: 6px; overflow: hidden; }
+        .octo-xp-fill { height: 100%; background: linear-gradient(90deg, #a06cd5, #c78de8); border-radius: 6px; transition: width 0.5s; }
+        @keyframes octoWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+        .octo-container.wiggle { animation: octoWiggle 0.5s ease; }
+        @keyframes octoPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        .octo-container.pop { animation: octoPop 0.4s ease; }
+
+        /* ===== STARS & REWARDS BAR ===== */
+        .rewards-bar {
+            display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+            margin-bottom: 20px; padding: 12px; background: #fff;
+            border: 2px solid #f0d0de; border-radius: 14px;
+        }
+        .reward-stat {
+            text-align: center;
+        }
+        .reward-stat .stat-value { font-size: 1.4em; font-weight: 800; color: #d46a8c; }
+        .reward-stat .stat-label { font-size: 0.75em; color: #b06888; }
+
+        /* ===== BADGES ===== */
+        .badges-section {
+            background: #fff; border: 2px solid #f0d0de; border-radius: 18px;
+            padding: 20px; margin-bottom: 20px;
+        }
+        .badges-title { font-weight: 800; font-size: 1.1em; color: #6d3a5a; margin-bottom: 12px; text-align: center; }
+        .badges-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .badge {
+            width: 70px; height: 70px; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 1.6em; position: relative;
+            transition: all 0.3s;
+        }
+        .badge.locked { background: #f0e0e8; opacity: 0.4; filter: grayscale(1); }
+        .badge.unlocked { background: linear-gradient(135deg, #ffecd2, #fcb69f); box-shadow: 0 2px 10px rgba(200,100,60,0.2); }
+        .badge .badge-name { font-size: 0.35em; font-weight: 700; color: #6d3a5a; margin-top: 2px; }
+        @keyframes badgeUnlock {
+            0% { transform: scale(0) rotate(-180deg); }
+            60% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .badge.just-unlocked { animation: badgeUnlock 0.6s ease; }
+
+        /* ===== TREATS TRACKER ===== */
+        .treats-section {
+            background: #fff; border: 2px solid #f0d0de; border-radius: 18px;
+            padding: 20px; margin-bottom: 20px;
+        }
+        .treats-title { font-weight: 800; font-size: 1.1em; color: #6d3a5a; margin-bottom: 12px; text-align: center; }
+        .treat-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 14px; border-radius: 12px; margin-bottom: 8px;
+            background: #fef6f9; border: 1px solid #f0d0de;
+        }
+        .treat-item .treat-icon { font-size: 1.5em; }
+        .treat-item .treat-info { flex: 1; }
+        .treat-item .treat-name { font-weight: 700; font-size: 0.95em; }
+        .treat-item .treat-progress-outer { height: 8px; background: #f5d0de; border-radius: 6px; overflow: hidden; margin-top: 4px; }
+        .treat-item .treat-progress-inner { height: 100%; background: linear-gradient(90deg, #f6d365, #fda085); border-radius: 6px; transition: width 0.5s; }
+        .treat-item .treat-count { font-size: 0.8em; font-weight: 700; color: #c06888; min-width: 60px; text-align: right; }
+        .treat-item.earned { background: #eaf7ec; border-color: #b4dbb8; }
+        .treat-item.earned .treat-count { color: #3a7d44; }
+
+        /* Settings panel */
+        .settings-btn {
+            background: none; border: none; font-size: 1.2em; cursor: pointer;
+            opacity: 0.6; transition: opacity 0.2s; vertical-align: middle; margin-left: 8px;
+        }
+        .settings-btn:hover { opacity: 1; }
+        .settings-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 500; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .settings-panel {
+            background: #fff; border-radius: 20px; padding: 28px;
+            max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .settings-panel h2 { font-size: 1.3em; color: #6d3a5a; margin-bottom: 16px; text-align: center; }
+        .settings-treat-row {
+            display: flex; gap: 8px; align-items: center; margin-bottom: 10px;
+        }
+        .settings-treat-row input[type="text"] {
+            font-family: 'Nunito', sans-serif; font-size: 0.95em; font-weight: 600;
+            padding: 8px 12px; border: 2px solid #e8c0d4; border-radius: 10px;
+            flex: 1; outline: none; color: #5d3a4a;
+        }
+        .settings-treat-row input[type="text"]:focus { border-color: #d46a8c; }
+        .settings-treat-row .emoji-input {
+            width: 50px; text-align: center; font-size: 1.2em;
+        }
+        .settings-treat-row .stars-input {
+            width: 70px; text-align: center;
+        }
+        .settings-treat-row .stars-label { font-size: 0.8em; color: #b06888; white-space: nowrap; }
+        .remove-treat-btn {
+            background: none; border: none; font-size: 1.2em; cursor: pointer;
+            color: #d88; transition: color 0.2s; padding: 4px;
+        }
+        .remove-treat-btn:hover { color: #c44; }
+        .add-treat-btn {
+            display: block; width: 100%; padding: 10px; margin-top: 8px;
+            background: #fef0f5; border: 2px dashed #e8c0d4; border-radius: 12px;
+            font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95em;
+            color: #b06888; cursor: pointer; transition: all 0.2s;
+        }
+        .add-treat-btn:hover { background: #f8d7e6; border-color: #d46a8c; }
+        .settings-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+        .settings-note { font-size: 0.8em; color: #b06888; text-align: center; margin-top: 12px; }
+
+        /* ===== SUBJECT GRID ===== */
+        .subject-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 30px; }
+        @media (max-width: 500px) { .subject-grid { grid-template-columns: 1fr; } }
+
+        .subject-card {
+            background: #fff; border: 2px solid #f0d0de; border-radius: 18px;
+            padding: 24px 18px; text-align: center; cursor: pointer; transition: all 0.25s;
+        }
+        .subject-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(200,100,140,0.15); border-color: #e8a0be; }
+        .subject-card .icon { font-size: 2.5em; margin-bottom: 8px; }
+        .subject-card .name { font-weight: 800; font-size: 1.1em; margin-bottom: 4px; }
+        .subject-card .topic-count { font-size: 0.85em; color: #b06888; margin-bottom: 10px; }
+        .subject-card .card-progress-outer { width: 100%; height: 8px; background: #f5d0de; border-radius: 6px; overflow: hidden; }
+        .subject-card .card-progress-inner { height: 100%; background: linear-gradient(90deg, #e88aab, #d46a8c); border-radius: 6px; transition: width 0.5s; }
+        .subject-card .card-pct { font-size: 0.8em; color: #c07898; margin-top: 4px; }
+
+        .topic-list { display: flex; flex-direction: column; gap: 12px; }
+        .topic-card {
+            background: #fff; border: 2px solid #f0d0de; border-radius: 14px;
+            padding: 18px 20px; display: flex; justify-content: space-between;
+            align-items: center; cursor: pointer; transition: all 0.2s;
+        }
+        .topic-card:hover { border-color: #e8a0be; transform: translateX(4px); }
+        .topic-card .topic-info .topic-name { font-weight: 700; font-size: 1.05em; }
+        .topic-card .topic-info .topic-qcount { font-size: 0.8em; color: #b06888; }
+        .topic-card .topic-score {
+            background: #fce4ec; border-radius: 10px; padding: 6px 14px;
+            font-weight: 700; font-size: 0.9em; color: #c06888; min-width: 60px; text-align: center;
+        }
+        .topic-card .topic-score.done { background: #d4edda; color: #3a7d44; }
+
+        .quiz-area { max-width: 650px; margin: 0 auto; }
+        .question-counter { text-align: center; font-size: 0.9em; color: #b06888; margin-bottom: 6px; }
+        .question-box {
+            background: #fff; border: 2px solid #f0d0de; border-radius: 18px;
+            padding: 30px 24px; margin-bottom: 18px;
+        }
+        .question-box .q-text { font-size: 1.15em; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+        .question-box .q-context {
+            font-size: 0.95em; line-height: 1.6; color: #6d4a5a; background: #fef6f9;
+            padding: 14px; border-radius: 10px; margin-bottom: 14px; border-left: 4px solid #e8a0be;
+        }
+        .question-box .q-hint { font-size: 0.85em; color: #b06888; font-style: italic; }
+
+        .answer-input-wrap { margin-bottom: 16px; text-align: center; }
+        .answer-input {
+            font-family: 'Nunito', sans-serif; font-size: 1.2em; font-weight: 700;
+            padding: 12px 20px; border: 2px solid #e8b4c8; border-radius: 12px;
+            text-align: center; width: 200px; outline: none; color: #5d3a4a;
+        }
+        .answer-input:focus { border-color: #d46a8c; }
+
+        .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+        .option-btn {
+            background: #fff; border: 2px solid #e8c0d4; border-radius: 12px;
+            padding: 14px 18px; font-family: 'Nunito', sans-serif; font-size: 1em;
+            font-weight: 600; color: #5d3a4a; cursor: pointer; text-align: left; transition: all 0.2s;
+        }
+        .option-btn:hover { background: #fef0f5; border-color: #d8a0b8; }
+        .option-btn.selected { background: #f8d7e6; border-color: #d46a8c; }
+        .option-btn.correct { background: #d4edda; border-color: #6abf7b; color: #2d6a3a; }
+        .option-btn.wrong { background: #fdd; border-color: #e88; color: #a33; }
+
+        .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1em;
+            padding: 12px 28px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-primary { background: linear-gradient(135deg, #e88aab, #d46a8c); color: #fff; }
+        .btn-primary:hover { transform: scale(1.04); box-shadow: 0 4px 14px rgba(200,80,120,0.3); }
+        .btn-secondary { background: #fff; border: 2px solid #e8b4c8; color: #6d3a5a; }
+        .btn-secondary:hover { background: #fef0f5; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .feedback { text-align: center; padding: 14px; border-radius: 12px; font-weight: 700; margin-bottom: 14px; display: none; }
+        .feedback.correct { display: block; background: #d4edda; color: #2d6a3a; }
+        .feedback.wrong { display: block; background: #fdd; color: #a33; }
+
+        .results-box {
+            background: #fff; border: 2px solid #f0d0de; border-radius: 18px; padding: 30px; text-align: center;
+        }
+        .results-box .score-big { font-size: 3em; font-weight: 800; color: #d46a8c; margin: 10px 0; }
+        .results-box .score-label { font-size: 1.1em; color: #b06888; }
+        .results-box .encouragement { font-size: 1.2em; font-weight: 700; margin: 15px 0; color: #6d3a5a; }
+        .stars-earned-display { font-size: 1.3em; margin: 10px 0; }
+        .results-list { text-align: left; margin: 20px 0; }
+        .result-item { padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; font-size: 0.95em; }
+        .result-item.was-correct { background: #eaf7ec; }
+        .result-item.was-wrong { background: #fef0f0; }
+        .result-item .ri-q { font-weight: 700; margin-bottom: 4px; }
+        .result-item .ri-correct { color: #3a7d44; font-weight: 600; }
+        .result-item .ri-yours { color: #c44; font-weight: 600; }
+
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-10 { margin-top: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .star-burst { display: inline-block; animation: popIn 0.4s ease; }
+
+        /* Star shower on quiz complete */
+        .star-shower { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; }
+        .falling-star {
+            position: absolute; top: -40px; font-size: 24px;
+            animation: fallStar 2s ease-in forwards;
+        }
+        @keyframes fallStar {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Notification popup */
+        .notification {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: #fff; border: 2px solid #e8a0be; border-radius: 16px;
+            padding: 14px 24px; font-weight: 700; color: #6d3a5a;
+            box-shadow: 0 8px 30px rgba(200,100,140,0.25); z-index: 1000;
+            transition: transform 0.4s ease; text-align: center;
+        }
+        .notification.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+<div class="deco">🍄</div>
+<div class="deco">✨</div>
+<div class="deco">💖</div>
+<div class="deco">🌸</div>
+<div class="deco">⭐</div>
+<div class="deco">🦋</div>
+
+<div id="notification" class="notification"></div>
+
+<div class="container">
+    <!-- HOME SCREEN -->
+    <div id="screen-home">
+        <div class="header">
+            <h1>📚 Sylvie's SATs Revision</h1>
+            <div class="subtitle">✨ 💖 ✨</div>
+        </div>
+
+        <!-- Octo-Buddy -->
+        <div class="octo-section">
+            <div class="octo-container" id="octo-container">
+                <div class="octo-body" id="octo-body"></div>
+            </div>
+            <div class="octo-name" id="octo-name">Octavia</div>
+            <div class="octo-level" id="octo-level">Level 1 - Tiny Baby</div>
+            <div class="octo-xp-bar"><div class="octo-xp-fill" id="octo-xp-fill"></div></div>
+            <div class="progress-text mt-10" id="octo-xp-text">0 / 10 stars to next level</div>
+        </div>
+
+        <!-- Stars & Rewards -->
+        <div class="rewards-bar">
+            <div class="reward-stat">
+                <div class="stat-value" id="total-stars">0</div>
+                <div class="stat-label">⭐ Total Stars</div>
+            </div>
+            <div class="reward-stat">
+                <div class="stat-value" id="total-badges">0</div>
+                <div class="stat-label">🏅 Badges</div>
+            </div>
+            <div class="reward-stat">
+                <div class="stat-value" id="total-streak">0</div>
+                <div class="stat-label">🔥 Day Streak</div>
+            </div>
+            <div class="reward-stat">
+                <div class="stat-value" id="total-quizzes">0</div>
+                <div class="stat-label">📝 Quizzes Done</div>
+            </div>
+        </div>
+
+        <!-- Treats Tracker -->
+        <div class="treats-section">
+            <div class="treats-title">🎁 Treat Tracker <button class="settings-btn" onclick="openTreatSettings()" title="Edit treats">⚙️</button></div>
+            <div id="treats-list"></div>
+        </div>
+
+        <!-- Badges -->
+        <div class="badges-section">
+            <div class="badges-title">🏅 Badge Collection</div>
+            <div class="badges-grid" id="badges-grid"></div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-bar-outer"><div class="progress-bar-inner" id="overall-progress"></div></div>
+            <div class="progress-text" id="overall-pct">0% complete</div>
+        </div>
+        <div class="subject-grid" id="subject-grid"></div>
+    </div>
+
+    <!-- TOPICS SCREEN -->
+    <div id="screen-topics" class="hidden">
+        <button class="back-btn" onclick="showHome()">⬅ Back</button>
+        <div class="header"><h1 id="subject-title"></h1></div>
+        <div class="progress-section">
+            <div class="progress-bar-outer"><div class="progress-bar-inner" id="subject-progress"></div></div>
+            <div class="progress-text" id="subject-pct">0% complete</div>
+        </div>
+        <div class="topic-list" id="topic-list"></div>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="screen-quiz" class="hidden">
+        <button class="back-btn" onclick="exitQuiz()">⬅ Back</button>
+        <div class="quiz-area">
+            <div class="question-counter" id="q-counter"></div>
+            <div class="progress-bar-outer mb-20"><div class="progress-bar-inner" id="quiz-progress"></div></div>
+            <div id="q-context-area"></div>
+            <div class="question-box">
+                <div class="q-text" id="q-text"></div>
+                <div class="q-hint hidden" id="q-hint"></div>
+            </div>
+            <div id="q-options"></div>
+            <div id="q-input-area" class="hidden answer-input-wrap">
+                <input type="text" class="answer-input" id="q-input" autocomplete="off" />
+            </div>
+            <div class="feedback" id="feedback"></div>
+            <div class="btn-row">
+                <button class="btn btn-primary" id="btn-submit" onclick="submitAnswer()">Check Answer</button>
+                <button class="btn btn-primary hidden" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div id="screen-results" class="hidden">
+        <button class="back-btn" onclick="backToTopics()">⬅ Back to Topics</button>
+        <div class="results-box">
+            <div class="score-label">You scored</div>
+            <div class="score-big" id="result-score"></div>
+            <div class="stars-earned-display" id="stars-earned"></div>
+            <div class="encouragement" id="result-msg"></div>
+            <div class="results-list" id="results-list"></div>
+            <div class="btn-row mt-10">
+                <button class="btn btn-primary" onclick="retryQuiz()">Try Again</button>
+                <button class="btn btn-secondary" onclick="backToTopics()">Back to Topics</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+//  QUESTION BANK
+// ============================================================
+const SUBJECTS = [
+    {
+        id: "maths-arithmetic", name: "Maths Arithmetic", icon: "➕",
+        topics: [
+            { name: "Addition & Subtraction", questions: [
+                { q: "What is 3,456 + 2,897?", type: "input", answer: "6353" },
+                { q: "Calculate 8,004 − 3,567", type: "input", answer: "4437" },
+                { q: "What is 12,345 + 6,789?", type: "input", answer: "19134" },
+                { q: "Calculate 50,000 − 27,863", type: "input", answer: "22137" },
+                { q: "What is 4,567 + 3,894 + 1,239?", type: "input", answer: "9700" },
+                { q: "Calculate 100,000 − 45,678", type: "input", answer: "54322" },
+                { q: "What is 23,456 + 8,765?", type: "input", answer: "32221" },
+                { q: "Calculate 70,301 − 28,456", type: "input", answer: "41845" },
+            ]},
+            { name: "Multiplication", questions: [
+                { q: "What is 346 × 7?", type: "input", answer: "2422" },
+                { q: "Calculate 28 × 34", type: "input", answer: "952" },
+                { q: "What is 456 × 23?", type: "input", answer: "10488" },
+                { q: "Calculate 1,234 × 6", type: "input", answer: "7404" },
+                { q: "What is 305 × 42?", type: "input", answer: "12810" },
+                { q: "Calculate 67 × 89", type: "input", answer: "5963" },
+                { q: "What is 2,500 × 40?", type: "input", answer: "100000" },
+                { q: "Calculate 708 × 36", type: "input", answer: "25488" },
+            ]},
+            { name: "Division", questions: [
+                { q: "What is 936 ÷ 8?", type: "input", answer: "117" },
+                { q: "Calculate 7,245 ÷ 5", type: "input", answer: "1449" },
+                { q: "What is 8,568 ÷ 7?", type: "input", answer: "1224" },
+                { q: "Calculate 4,356 ÷ 12", type: "input", answer: "363" },
+                { q: "What is 9,000 ÷ 25?", type: "input", answer: "360" },
+                { q: "Calculate 6,384 ÷ 8", type: "input", answer: "798" },
+                { q: "What is 15,000 ÷ 60?", type: "input", answer: "250" },
+                { q: "Calculate 2,736 ÷ 9", type: "input", answer: "304" },
+            ]},
+            { name: "Fractions", questions: [
+                { q: "What is ¾ + ½?", type: "mc", options: ["1 ¼", "1 ½", "1", "¾"], answer: "1 ¼" },
+                { q: "Calculate ⅗ of 450", type: "input", answer: "270" },
+                { q: "What is ⅔ − ¼?", type: "mc", options: ["5/12", "1/3", "3/8", "7/12"], answer: "5/12" },
+                { q: "Simplify 18/24", type: "mc", options: ["3/4", "2/3", "6/8", "9/12"], answer: "3/4" },
+                { q: "What is ⅖ × 35?", type: "input", answer: "14" },
+                { q: "Calculate 3½ + 2¾", type: "mc", options: ["6 ¼", "5 ¾", "6", "5 ½"], answer: "6 ¼" },
+                { q: "What is ⅞ − ⅜?", type: "mc", options: ["½", "¼", "⅝", "⅗"], answer: "½" },
+                { q: "What fraction of 1 hour is 45 minutes?", type: "mc", options: ["¾", "⅘", "½", "⅔"], answer: "¾" },
+            ]},
+            { name: "Decimals", questions: [
+                { q: "What is 3.45 + 2.78?", type: "input", answer: "6.23" },
+                { q: "Calculate 10 − 3.67", type: "input", answer: "6.33" },
+                { q: "What is 4.5 × 6?", type: "input", answer: "27" },
+                { q: "Calculate 8.4 ÷ 4", type: "input", answer: "2.1" },
+                { q: "What is 0.6 × 0.3?", type: "input", answer: "0.18" },
+                { q: "Put in order smallest to largest: 0.45, 0.405, 0.5, 0.54", type: "mc", options: ["0.405, 0.45, 0.5, 0.54", "0.45, 0.405, 0.54, 0.5", "0.5, 0.45, 0.405, 0.54", "0.405, 0.5, 0.45, 0.54"], answer: "0.405, 0.45, 0.5, 0.54" },
+                { q: "What is 12.6 ÷ 3?", type: "input", answer: "4.2" },
+                { q: "Calculate 7.25 + 3.8", type: "input", answer: "11.05" },
+            ]},
+            { name: "Percentages", questions: [
+                { q: "What is 25% of 360?", type: "input", answer: "90" },
+                { q: "Calculate 10% of 4,500", type: "input", answer: "450" },
+                { q: "What is 15% of 200?", type: "input", answer: "30" },
+                { q: "A coat costs £80. It is reduced by 20%. What is the sale price?", type: "mc", options: ["£64", "£60", "£70", "£16"], answer: "£64" },
+                { q: "What is 5% of 1,200?", type: "input", answer: "60" },
+                { q: "30 out of 50 children walk to school. What percentage?", type: "mc", options: ["60%", "30%", "50%", "65%"], answer: "60%" },
+                { q: "What is 75% of 480?", type: "input", answer: "360" },
+                { q: "A book costs £12. VAT of 20% is added. What is the total?", type: "mc", options: ["£14.40", "£14.00", "£15.20", "£13.20"], answer: "£14.40" },
+            ]},
+            { name: "BODMAS", questions: [
+                { q: "Calculate: 5 + 3 × 4", type: "input", answer: "17" },
+                { q: "What is (8 + 2) × 6?", type: "input", answer: "60" },
+                { q: "Calculate: 20 − 3 × 4 + 2", type: "input", answer: "10" },
+                { q: "What is 36 ÷ (3 + 6)?", type: "input", answer: "4" },
+                { q: "Calculate: 7 × 8 − 12 ÷ 3", type: "input", answer: "52" },
+                { q: "What is (15 − 5) × (2 + 3)?", type: "input", answer: "50" },
+                { q: "Calculate: 100 − 6 × (3 + 2)", type: "input", answer: "70" },
+                { q: "What is 4² + 3 × 5?", type: "mc", options: ["31", "35", "95", "27"], answer: "31" },
+            ]}
+        ]
+    },
+    {
+        id: "maths-reasoning", name: "Maths Reasoning", icon: "🧩",
+        topics: [
+            { name: "Word Problems", questions: [
+                { q: "A school orders 24 boxes of pencils. Each box has 36. How many pencils in total?", type: "input", answer: "864" },
+                { q: "Emma has £15.50. She buys a book for £8.75. How much change?", type: "input", answer: "6.75", hint: "Just the number" },
+                { q: "A train departs at 09:35 and takes 2 hours 45 minutes. Arrival time?", type: "mc", options: ["12:20", "12:15", "11:20", "12:35"], answer: "12:20" },
+                { q: "345 children split into 15 equal groups. How many per group?", type: "input", answer: "23" },
+                { q: "A recipe for 4 uses 600g flour. How much for 10 people?", type: "input", answer: "1500", hint: "Answer in grams" },
+                { q: "Tom saves £3.50 weekly. How many weeks to save £49?", type: "input", answer: "14" },
+                { q: "A car at 60mph for 2 hours 30 mins. Distance?", type: "mc", options: ["150 miles", "120 miles", "130 miles", "180 miles"], answer: "150 miles" },
+                { q: "128 sweets shared among 8 children. Each gives away 5. How many left each?", type: "input", answer: "11" },
+            ]},
+            { name: "Geometry & Shapes", questions: [
+                { q: "How many degrees in a triangle?", type: "input", answer: "180" },
+                { q: "Rectangle: length 12cm, width 5cm. Area?", type: "mc", options: ["60cm²", "34cm²", "17cm²", "50cm²"], answer: "60cm²" },
+                { q: "Name of a 6-sided shape?", type: "mc", options: ["Hexagon", "Pentagon", "Octagon", "Heptagon"], answer: "Hexagon" },
+                { q: "Triangle angles: 65° and 45°. Third angle?", type: "input", answer: "70" },
+                { q: "Square perimeter 48cm. Side length?", type: "input", answer: "12" },
+                { q: "What type of angle is 135°?", type: "mc", options: ["Obtuse", "Acute", "Reflex", "Right angle"], answer: "Obtuse" },
+                { q: "Circle radius 7cm. Diameter?", type: "input", answer: "14" },
+                { q: "Regular pentagon, sides 8cm. Perimeter?", type: "input", answer: "40" },
+            ]},
+            { name: "Measurement & Units", questions: [
+                { q: "How many ml in 3.5 litres?", type: "input", answer: "3500" },
+                { q: "Convert 4,200m to km", type: "input", answer: "4.2" },
+                { q: "How many grams in 2.75kg?", type: "input", answer: "2750" },
+                { q: "Film starts 14:50, lasts 1hr 35min. End time?", type: "mc", options: ["16:25", "16:15", "15:85", "16:35"], answer: "16:25" },
+                { q: "How many cm in 1.8 metres?", type: "input", answer: "180" },
+                { q: "Convert 5,600ml to litres", type: "input", answer: "5.6" },
+                { q: "Which is longer: 2.5km or 2,400m?", type: "mc", options: ["2.5km", "2,400m", "Same", "Cannot tell"], answer: "2.5km" },
+                { q: "How many seconds in 4 minutes?", type: "input", answer: "240" },
+            ]},
+            { name: "Statistics & Data", questions: [
+                { q: "Ages: 9, 10, 11, 9, 11. Mean?", type: "input", answer: "10" },
+                { q: "Range of: 3, 7, 2, 9, 5?", type: "input", answer: "7" },
+                { q: "Mode of: 4, 7, 4, 9, 4, 7, 2?", type: "input", answer: "4" },
+                { q: "Median of: 3, 8, 1, 6, 4?", type: "mc", options: ["4", "3", "6", "5"], answer: "4" },
+                { q: "Scores: 60, 75, 80, 70, 65. Total?", type: "input", answer: "350" },
+                { q: "Mean of 4 numbers is 12. Total?", type: "input", answer: "48" },
+                { q: "15 chose football, 10 netball, 5 tennis. Fraction for football?", type: "mc", options: ["½", "⅓", "¼", "⅗"], answer: "½" },
+                { q: "Range is 15, smallest is 8. Largest?", type: "input", answer: "23" },
+            ]},
+            { name: "Algebra", questions: [
+                { q: "If n = 7, what is 3n + 5?", type: "input", answer: "26" },
+                { q: "Solve: 4x = 28", type: "input", answer: "7" },
+                { q: "y + 15 = 42. What is y?", type: "input", answer: "27" },
+                { q: "a=5, b=3. What is 2a + 4b?", type: "input", answer: "22" },
+                { q: "? × 6 = 54. Find ?", type: "input", answer: "9" },
+                { q: "Rule: ×3 then −2. Input 8. Output?", type: "input", answer: "22" },
+                { q: "3m − 4 = 20. What is m?", type: "input", answer: "8" },
+                { q: "Sequence: 2, 6, 18, 54, ... Next two?", type: "mc", options: ["162, 486", "108, 324", "162, 324", "72, 216"], answer: "162, 486" },
+            ]},
+            { name: "Ratio & Proportion", questions: [
+                { q: "Share £40 in ratio 3:5. Larger share?", type: "input", answer: "25" },
+                { q: "Sugar:flour = 1:4. 200g flour, how much sugar?", type: "input", answer: "50", hint: "In grams" },
+                { q: "60 sweets in ratio 2:3. Smaller group?", type: "input", answer: "24" },
+                { q: "Boys:girls = 3:4, 28 children. How many boys?", type: "input", answer: "12" },
+                { q: "3 pencils = 45p. Cost of 7?", type: "mc", options: ["£1.05", "£1.15", "90p", "£1.50"], answer: "£1.05" },
+                { q: "Share 72 in ratio 5:3:1. Largest share?", type: "input", answer: "40" },
+                { q: "4 workers take 6 hours. How long for 8?", type: "mc", options: ["3 hours", "4 hours", "12 hours", "2 hours"], answer: "3 hours" },
+                { q: "Map 1:25,000. 4cm on map = ? metres real", type: "input", answer: "1000" },
+            ]}
+        ]
+    },
+    {
+        id: "english-reading", name: "English Reading", icon: "📖",
+        topics: [
+            { name: "Comprehension", questions: [
+                { q: "Why did Tom feel nervous?", context: "Tom stood at the edge of the diving board, his knees trembling. Below him, the water shimmered like a mirror. He had never dived from this height before. His friends watched from the poolside, their encouraging shouts barely reaching his ears over the pounding of his heart.", type: "mc", options: ["He had never dived from this height before", "He couldn't swim", "His friends were being mean", "The water was too cold"], answer: "He had never dived from this height before" },
+                { q: "What does 'shimmered' suggest about the water?", context: "Below him, the water shimmered like a mirror.", type: "mc", options: ["It was bright and sparkling", "It was dirty", "It was frozen", "It was very deep"], answer: "It was bright and sparkling" },
+                { q: "What time of year is it?", context: "The leaves had turned a brilliant amber and crimson, carpeting the ground beneath Maya's feet. She pulled her scarf tighter as a gust of wind sent more leaves spiralling from the branches above. The days were getting noticeably shorter now.", type: "mc", options: ["Autumn", "Summer", "Winter", "Spring"], answer: "Autumn" },
+                { q: "How can you tell the character is determined?", context: "Despite the rain hammering against her face, Priya kept running. Her legs ached and her lungs burned, but she could see the finish line ahead. She had trained for six months for this moment, and nothing was going to stop her now.", type: "mc", options: ["She keeps running despite pain and bad weather", "She is wearing running shoes", "She has trained for a long time", "She can see the finish line"], answer: "She keeps running despite pain and bad weather" },
+                { q: "What does 'carpeting the ground' mean?", context: "The leaves had turned a brilliant amber and crimson, carpeting the ground beneath Maya's feet.", type: "mc", options: ["Covering the ground thickly like a carpet", "Someone laid a carpet outside", "The ground was bouncy", "The leaves were rectangular"], answer: "Covering the ground thickly like a carpet" },
+                { q: "Which statement is TRUE?", context: "The old lighthouse had stood on the cliff for over two hundred years. Once, its beam had guided ships safely past the jagged rocks below. Now, the light was dark and the building was crumbling, but local people were raising money to restore it.", type: "mc", options: ["Local people want to save the lighthouse", "The lighthouse is still in use", "It's less than 100 years old", "Nobody cares about it"], answer: "Local people want to save the lighthouse" },
+            ]},
+            { name: "Inference", questions: [
+                { q: "How is the character most likely feeling?", context: "Lily's hands shook as she opened the envelope. She scanned the first line, then read it again. Slowly, a smile spread across her face and she let out a squeal, jumping up and down.", type: "mc", options: ["Excited and happy", "Nervous and scared", "Angry and upset", "Bored and tired"], answer: "Excited and happy" },
+                { q: "What can you infer about the old man?", context: "Mr Jenkins shuffled slowly along the corridor, one hand gripping his walking stick, the other steadying himself against the wall. He paused frequently to catch his breath, but his eyes were sharp and bright, noticing everything.", type: "mc", options: ["He is physically frail but mentally alert", "He is very ill and confused", "He is pretending to be old", "He cannot see well"], answer: "He is physically frail but mentally alert" },
+                { q: "What happened just before this scene?", context: "Glass crunched under her shoes. The window frame was empty, jagged edges catching the light. A football lay in the middle of the kitchen floor, surrounded by shards.", type: "mc", options: ["A football was kicked through the window", "There was an earthquake", "Someone broke in", "The window was being replaced"], answer: "A football was kicked through the window" },
+                { q: "Why did the writer choose the word 'crept'?", context: "The fox crept through the garden, keeping low to the ground. It paused by the hedge, ears twitching, before slinking towards the chicken coop.", type: "mc", options: ["To show the fox is careful and sneaky", "The fox is injured", "The fox is very old", "The fox is lost"], answer: "To show the fox is careful and sneaky" },
+                { q: "What can you infer about their relationship?", context: "'You promised!' shouted Sam, tears streaming down his face. His older brother looked away, hands in his pockets. 'I know,' he muttered. 'Something came up.' Sam grabbed his football and stormed off to his room.", type: "mc", options: ["The brother broke a promise and Sam feels let down", "They are strangers", "Sam lost a football match", "The brother is Sam's teacher"], answer: "The brother broke a promise and Sam feels let down" },
+                { q: "What can you infer about the setting?", context: "The air was thick and humid, and strange calls echoed from the canopy above. Vines hung like curtains between enormous tree trunks, and the ground was soft and damp underfoot. Tiny frogs the colour of jewels watched from broad leaves.", type: "mc", options: ["It is a tropical rainforest", "It is a park in England", "It is a desert oasis", "It is a garden centre"], answer: "It is a tropical rainforest" },
+            ]},
+            { name: "Vocabulary in Context", questions: [
+                { q: "What does 'reluctantly' mean?", context: "Leo reluctantly handed over his last sweet to his little sister.", type: "mc", options: ["Unwillingly", "Happily", "Quickly", "Angrily"], answer: "Unwillingly" },
+                { q: "What does 'loomed' suggest?", context: "The castle loomed above them, its dark towers blocking out the sky.", type: "mc", options: ["It appeared large and threatening", "It was very small", "It was brightly coloured", "It was falling down"], answer: "It appeared large and threatening" },
+                { q: "Which word means 'very tired'?", context: "After walking for twelve miles across the moors, the exhausted hikers finally spotted the village below.", type: "mc", options: ["exhausted", "spotted", "heavy", "flooded"], answer: "exhausted" },
+                { q: "What does 'devoured' mean here?", context: "The children devoured their sandwiches in minutes, barely stopping to breathe.", type: "mc", options: ["Ate very quickly and hungrily", "Threw away", "Carefully prepared", "Slowly tasted"], answer: "Ate very quickly and hungrily" },
+                { q: "What is the effect of 'erupted'?", context: "The crowd erupted into cheers when the winning goal was scored.", type: "mc", options: ["The cheering was sudden, loud and explosive", "The crowd was angry", "The crowd was quiet", "There was a volcano"], answer: "The cheering was sudden, loud and explosive" },
+                { q: "Which word is closest to 'peculiar'?", context: "There was something peculiar about the old house.", type: "mc", options: ["Strange", "Beautiful", "Large", "Expensive"], answer: "Strange" },
+            ]},
+            { name: "Summarising", questions: [
+                { q: "Best one-sentence summary?", context: "The ancient Egyptians built the pyramids as tombs for their pharaohs. They believed pharaohs would need treasures in the afterlife, so they filled pyramids with gold, jewels and everyday objects. Building a pyramid took thousands of workers and many years.", type: "mc", options: ["Egyptians built treasure-filled pyramid tombs for pharaohs, taking many workers and years", "Egyptians liked gold", "Building takes time", "Pharaohs lived in pyramids"], answer: "Egyptians built treasure-filled pyramid tombs for pharaohs, taking many workers and years" },
+                { q: "Main points of this passage?", context: "Plastic pollution threatens our oceans. Millions of tonnes of plastic end up in the sea yearly, harming marine life. Turtles mistake bags for jellyfish, birds get tangled in rings. Many countries now ban single-use plastics.", type: "mc", options: ["Plastic harms marine life; countries banning single-use plastics", "Turtles eat jellyfish", "Plastic bags are useful", "The ocean is big"], answer: "Plastic harms marine life; countries banning single-use plastics" },
+                { q: "Best summary of the key idea?", context: "Bees pollinate around one-third of everything we eat. Without bees, many foods would disappear. However, bee populations are declining due to pesticides, habitat loss and disease.", type: "mc", options: ["Bees are essential pollinators but their numbers are declining", "Bees make honey", "Pesticides help farmers", "We eat fruit and veg"], answer: "Bees are essential pollinators but their numbers are declining" },
+                { q: "Put events in order:", context: "First, the caterpillar hatches from a tiny egg. It eats and grows. Then it forms a chrysalis. Inside, a transformation takes place. Finally, a butterfly emerges.", type: "mc", options: ["Egg → Caterpillar → Chrysalis → Butterfly", "Butterfly → Egg → Caterpillar → Chrysalis", "Chrysalis → Caterpillar → Egg → Butterfly", "Caterpillar → Egg → Butterfly → Chrysalis"], answer: "Egg → Caterpillar → Chrysalis → Butterfly" },
+                { q: "What is the main purpose?", context: "If you find an injured bird, don't pick it up straight away. Observe from a distance. If clearly hurt, place in a ventilated box with soft cloth. Keep warm and quiet, contact your local wildlife rescue.", type: "mc", options: ["To give instructions on helping an injured bird", "To describe bird types", "To persuade people to become vets", "To explain migration"], answer: "To give instructions on helping an injured bird" },
+                { q: "Which detail is NOT a main point?", context: "The Great Fire of London broke out in 1666 in a bakery on Pudding Lane. Strong winds helped it spread through wooden houses. It burned for four days, destroying 13,000+ houses. Few died. Buildings were rebuilt in brick and stone.", type: "mc", options: ["The bakery was on Pudding Lane", "13,000+ houses destroyed", "Rebuilt in brick and stone", "Burned for four days"], answer: "The bakery was on Pudding Lane" },
+            ]},
+            { name: "Author's Purpose & Language", questions: [
+                { q: "Why use a rhetorical question here?", context: "'How would you feel if your home was destroyed?' the author writes about deforestation.", type: "mc", options: ["To make the reader think and feel sympathy", "They don't know the answer", "To confuse the reader", "To make the text longer"], answer: "To make the reader think and feel sympathy" },
+                { q: "Effect of the short sentence 'She ran.'?", context: "The footsteps grew louder. Closer. She could hear breathing. She ran.", type: "mc", options: ["Creates tension and urgency", "Shows she is lazy", "Slows the story", "A mistake"], answer: "Creates tension and urgency" },
+                { q: "What technique is this?", context: "The wind howled angrily through the trees, tearing at branches with invisible claws.", type: "mc", options: ["Personification", "Alliteration", "Simile", "Onomatopoeia"], answer: "Personification" },
+                { q: "Why was this text written?", context: "Every child deserves books. Reading opens doors to new worlds. Yet many families can't afford them. Our charity provides free books. Please donate today.", type: "mc", options: ["To persuade people to donate", "To entertain children", "To teach reading", "To describe books"], answer: "To persuade people to donate" },
+                { q: "What is the simile?", context: "The snow lay on the ground like a thick white blanket, muffling every sound.", type: "mc", options: ["'like a thick white blanket'", "'muffling every sound'", "'peaceful and still'", "'snow lay on the ground'"], answer: "'like a thick white blanket'" },
+                { q: "Effect of first person narration?", context: "I remember the day everything changed. I was in the kitchen when Mum came in with that look on her face.", type: "mc", options: ["Makes us feel close to the character", "Sounds like a news report", "Makes it less interesting", "Means the story is true"], answer: "Makes us feel close to the character" },
+            ]},
+            { name: "Comparing & Evaluating", questions: [
+                { q: "How are the characters different?", context: "Zara loved being centre of attention in school plays. Her twin Mia preferred painting scenery and organising costumes.", type: "mc", options: ["Zara is outgoing; Mia prefers behind-the-scenes", "Zara is older", "Mia hates plays", "They're the same"], answer: "Zara is outgoing; Mia prefers behind-the-scenes" },
+                { q: "Which text is more formal?", context: "A: 'The investigation revealed approximately 47% expressed dissatisfaction.' B: 'Nearly half said they weren't happy.'", type: "mc", options: ["Text A", "Text B", "Equally formal", "Neither"], answer: "Text A" },
+                { q: "Does the author agree with zoos?", context: "Supporters say zoos protect species and educate. However, many animals show stress. Enclosures can never match the wild. Is it truly kind to cage a creature for entertainment?", type: "mc", options: ["No — language suggests zoos are unkind", "Yes — zoos are wonderful", "No opinion", "Only cares about education"], answer: "No — language suggests zoos are unkind" },
+                { q: "Best source for Viking daily life?", type: "mc", options: ["Non-fiction book about Viking history", "Viking-themed novel", "Viking film", "Viking computer game"], answer: "Non-fiction book about Viking history" },
+                { q: "How do the passages differ on city life?", context: "A: 'The city buzzed with energy. Music spilled from cafes, markets overflowed with colour.' B: 'The city was grey, joyless. Traffic crawled, air thick with fumes. Nobody smiled.'", type: "mc", options: ["A is positive; B is negative", "Both positive", "Both negative", "A is about a village"], answer: "A is positive; B is negative" },
+                { q: "'Chocolate is the greatest invention in history.' Fact or opinion?", type: "mc", options: ["Opinion", "Fact — chocolate is great", "Fact — they said 'without doubt'", "Neither"], answer: "Opinion" },
+            ]}
+        ]
+    },
+    {
+        id: "grammar-spelling", name: "Grammar & Spelling", icon: "✏️",
+        topics: [
+            { name: "Sentence Types", questions: [
+                { q: "'Close the door!' — what type?", type: "mc", options: ["Command (imperative)", "Question", "Statement", "Exclamation"], answer: "Command (imperative)" },
+                { q: "Which is a question?", type: "mc", options: ["Have you seen my bag", "I lost my bag", "Find my bag", "What a lovely bag"], answer: "Have you seen my bag" },
+                { q: "'What a beautiful sunset!' — type?", type: "mc", options: ["Exclamation", "Command", "Question", "Statement"], answer: "Exclamation" },
+                { q: "Which is a statement?", type: "mc", options: ["The dog sat on the mat.", "Sit on the mat!", "Did the dog sit?", "What a good dog!"], answer: "The dog sat on the mat." },
+                { q: "Turn into a question: 'She is coming to the party.'", type: "mc", options: ["Is she coming to the party?", "She is coming!", "Come to the party!", "What a great party!"], answer: "Is she coming to the party?" },
+                { q: "Which uses a command?", type: "mc", options: ["Put your coat on now.", "I'm putting my coat on.", "Are you putting your coat on?", "What a warm coat!"], answer: "Put your coat on now." },
+            ]},
+            { name: "Punctuation", questions: [
+                { q: "Correct comma use in a list?", type: "mc", options: ["I bought apples, bananas, grapes and oranges.", "I bought apples bananas grapes and oranges.", "I bought, apples, bananas, grapes, and oranges.", "I bought apples, bananas grapes, and oranges."], answer: "I bought apples, bananas, grapes and oranges." },
+                { q: "Apostrophe in 'the dogs bone' (one dog)?", type: "mc", options: ["the dog's bone", "the dogs' bone", "the dog's' bone", "the dogs bone'"], answer: "the dog's bone" },
+                { q: "Correct speech marks?", type: "mc", options: ["\"I love swimming,\" said Mia.", "I love swimming, \"said Mia.\"", "I love \"swimming, said Mia.\"", "\"I love swimming, said Mia.\""], answer: "\"I love swimming,\" said Mia." },
+                { q: "Apostrophe in 'teachers staffroom' (many teachers)?", type: "mc", options: ["the teachers' staffroom", "the teacher's staffroom", "the teachers staffroom'", "the teacher staffroom's"], answer: "the teachers' staffroom" },
+                { q: "Correct semi-colon use?", type: "mc", options: ["It was raining; we stayed indoors.", "It was raining; heavily we stayed.", "It was raining we; stayed indoors.", "It; was raining we stayed."], answer: "It was raining; we stayed indoors." },
+                { q: "Which needs a colon?", type: "mc", options: ["You need the following: a pen, ruler and rubber.", "You need: a pen: a ruler: and rubber.", "You: need a pen, ruler and rubber.", "You need a pen, ruler and rubber."], answer: "You need the following: a pen, ruler and rubber." },
+                { q: "Which is correct?", type: "mc", options: ["it's = it is; its = belonging to it", "its = it is; it's = belonging to it", "They mean the same", "Neither exists"], answer: "it's = it is; its = belonging to it" },
+            ]},
+            { name: "Verb Tenses", questions: [
+                { q: "Which is past tense?", type: "mc", options: ["The children played in the park.", "The children play in the park.", "The children will play.", "The children are playing."], answer: "The children played in the park." },
+                { q: "Present progressive of 'She reads a book'?", type: "mc", options: ["She is reading a book.", "She read a book.", "She will read.", "She has read."], answer: "She is reading a book." },
+                { q: "Which uses present perfect?", type: "mc", options: ["I have finished my homework.", "I finished my homework.", "I am finishing.", "I will finish."], answer: "I have finished my homework." },
+                { q: "Past tense of 'catch'?", type: "mc", options: ["caught", "catched", "catching", "caughted"], answer: "caught" },
+                { q: "Which is future tense?", type: "mc", options: ["We will visit the museum.", "We visited yesterday.", "We are visiting now.", "We visit regularly."], answer: "We will visit the museum." },
+                { q: "Past tense: 'She writes a letter'?", type: "mc", options: ["She wrote a letter.", "She writed a letter.", "She has written.", "She writing."], answer: "She wrote a letter." },
+                { q: "Which is a past participle?", type: "mc", options: ["eaten", "eating", "eats", "eat"], answer: "eaten" },
+            ]},
+            { name: "Word Classes", questions: [
+                { q: "'quickly' in 'She ran quickly' is a...?", type: "mc", options: ["Adverb", "Adjective", "Noun", "Verb"], answer: "Adverb" },
+                { q: "Preposition in 'The cat sat under the table'?", type: "mc", options: ["under", "cat", "sat", "the"], answer: "under" },
+                { q: "Noun in 'The happiness was overwhelming'?", type: "mc", options: ["happiness", "was", "overwhelming", "the"], answer: "happiness" },
+                { q: "Which is a conjunction?", type: "mc", options: ["because", "quickly", "beautiful", "jumped"], answer: "because" },
+                { q: "Adjective in 'The enormous elephant drank water'?", type: "mc", options: ["enormous", "elephant", "drank", "water"], answer: "enormous" },
+                { q: "Determiner in 'Those children are playing'?", type: "mc", options: ["Those", "children", "are", "playing"], answer: "Those" },
+                { q: "Pronoun in 'She gave them a present'?", type: "mc", options: ["She and them", "gave", "a", "present"], answer: "She and them" },
+            ]},
+            { name: "Spelling Patterns", questions: [
+                { q: "Correct spelling?", type: "mc", options: ["necessary", "neccessary", "necesary", "neccesary"], answer: "necessary" },
+                { q: "Correct spelling?", type: "mc", options: ["separate", "seperate", "separete", "seperete"], answer: "separate" },
+                { q: "Correct spelling?", type: "mc", options: ["definitely", "definately", "definatly", "definetely"], answer: "definitely" },
+                { q: "Correct suffix?", type: "mc", options: ["enjoyment", "enjoymente", "enjoiment", "enjoymant"], answer: "enjoyment" },
+                { q: "Correct spelling?", type: "mc", options: ["disappear", "dissapear", "disapear", "dissappear"], answer: "disappear" },
+                { q: "Prefix for 'not possible'?", type: "mc", options: ["im- (impossible)", "in-", "un-", "dis-"], answer: "im- (impossible)" },
+                { q: "Correct spelling?", type: "mc", options: ["accommodation", "accomodation", "acommodation", "acomodation"], answer: "accommodation" },
+                { q: "Correct '-tion' ending?", type: "mc", options: ["education", "educasion", "educashion", "educascion"], answer: "education" },
+            ]},
+            { name: "Active & Passive Voice", questions: [
+                { q: "Which is passive voice?", type: "mc", options: ["The cake was eaten by the children.", "The children ate the cake.", "The children are eating.", "Eat the cake!"], answer: "The cake was eaten by the children." },
+                { q: "Change to passive: 'The dog chased the cat.'", type: "mc", options: ["The cat was chased by the dog.", "The cat chased the dog.", "The dog was chased.", "Chasing was done."], answer: "The cat was chased by the dog." },
+                { q: "Which is active voice?", type: "mc", options: ["The teacher marked the tests.", "The tests were marked.", "Tests were being marked.", "Marking was done."], answer: "The teacher marked the tests." },
+                { q: "Change to active: 'The window was broken by the ball.'", type: "mc", options: ["The ball broke the window.", "The window broke the ball.", "Breaking occurred.", "A ball was involved."], answer: "The ball broke the window." },
+                { q: "Why use passive voice?", type: "mc", options: ["To focus on the action, not who did it", "To make sentences shorter", "Because it's more casual", "To use fewer words"], answer: "To focus on the action, not who did it" },
+                { q: "Which is passive?", type: "mc", options: ["Homework was completed before dinner.", "She completed homework.", "She is completing homework.", "Complete your homework!"], answer: "Homework was completed before dinner." },
+            ]},
+            { name: "Clauses & Sentences", questions: [
+                { q: "Which is a subordinate clause?", type: "mc", options: ["although it was raining", "I went to the shop", "The dog barked loudly", "She ate lunch"], answer: "although it was raining" },
+                { q: "Main clause in 'Because it was cold, we wore coats'?", type: "mc", options: ["we wore coats", "Because it was cold", "it was cold", "Because we wore coats"], answer: "we wore coats" },
+                { q: "Which is a subordinating conjunction?", type: "mc", options: ["while", "and", "but", "so"], answer: "while" },
+                { q: "'The boy ___ won the race was delighted.' Fill in:", type: "mc", options: ["who", "which", "where", "when"], answer: "who" },
+                { q: "Which has a relative clause?", type: "mc", options: ["The house, which was old, had a red door.", "The house had a red door.", "The old house had a red door.", "There was a red door."], answer: "The house, which was old, had a red door." },
+                { q: "Why is this a complex sentence?", context: "After the sun set, the stars began to appear.", type: "mc", options: ["Main clause + subordinate clause", "Two main clauses", "Uses a comma", "It's very long"], answer: "Main clause + subordinate clause" },
+                { q: "Which is a coordinating conjunction?", type: "mc", options: ["but", "because", "although", "while"], answer: "but" },
+            ]}
+        ]
+    },
+    {
+        id: "science", name: "Science", icon: "🔬",
+        topics: [
+            { name: "Living Things & Habitats", questions: [
+                { q: "Seven life processes (MRS NERG)?", type: "mc", options: ["Movement, Respiration, Sensitivity, Nutrition, Excretion, Reproduction, Growth", "Moving, Running, Sleeping, Nutrition, Eating, Resting, Growing", "Memory, Reading, Speaking, Numbers, English, Religion, Geography", "Mammals, Reptiles, Spiders, Newts, Eagles, Rabbits, Goats"], answer: "Movement, Respiration, Sensitivity, Nutrition, Excretion, Reproduction, Growth" },
+                { q: "Animals with backbones are called?", type: "mc", options: ["Vertebrates", "Invertebrates", "Mammals", "Arthropods"], answer: "Vertebrates" },
+                { q: "What is a habitat?", type: "mc", options: ["Natural environment where an organism lives", "A human house", "A zoo cage", "A food chain"], answer: "Natural environment where an organism lives" },
+                { q: "Which is a micro-organism?", type: "mc", options: ["Bacteria", "Oak tree", "Spider", "Eagle"], answer: "Bacteria" },
+                { q: "What is a food chain?", type: "mc", options: ["Diagram showing what eats what", "A recipe", "A chain of food packaging", "An ingredient list"], answer: "Diagram showing what eats what" },
+                { q: "Five kingdoms of living things?", type: "mc", options: ["Animals, Plants, Fungi, Bacteria, Protists", "Mammals, Birds, Fish, Reptiles, Amphibians", "Flowers, Trees, Grass, Moss, Ferns", "Lions, Tigers, Bears, Wolves, Eagles"], answer: "Animals, Plants, Fungi, Bacteria, Protists" },
+                { q: "Carl Linnaeus is father of...?", type: "mc", options: ["Classification", "Evolution", "Electricity", "Gravity"], answer: "Classification" },
+                { q: "What is an apex predator?", type: "mc", options: ["Top of food chain, no natural predators", "Smallest animal", "Plant that eats insects", "Baby animal"], answer: "Top of food chain, no natural predators" },
+            ]},
+            { name: "Animals Including Humans", questions: [
+                { q: "Main function of the heart?", type: "mc", options: ["Pump blood around the body", "Help you breathe", "Digest food", "Filter waste"], answer: "Pump blood around the body" },
+                { q: "Which vessels carry blood AWAY from the heart?", type: "mc", options: ["Arteries", "Veins", "Capillaries", "Valves"], answer: "Arteries" },
+                { q: "Main food groups for balanced diet?", type: "mc", options: ["Carbs, proteins, fats, vitamins, minerals, fibre, water", "Just carbs and proteins", "Sugar, salt, fat", "Fruit and veg only"], answer: "Carbs, proteins, fats, vitamins, minerals, fibre, water" },
+                { q: "Which organ filters blood and makes urine?", type: "mc", options: ["Kidneys", "Lungs", "Liver", "Stomach"], answer: "Kidneys" },
+                { q: "What does the respiratory system do?", type: "mc", options: ["Brings in oxygen, removes carbon dioxide", "Digests food", "Pumps blood", "Moves muscles"], answer: "Brings in oxygen, removes carbon dioxide" },
+                { q: "Which nutrient for muscle growth and repair?", type: "mc", options: ["Protein", "Carbohydrates", "Fat", "Fibre"], answer: "Protein" },
+                { q: "How many chambers in the human heart?", type: "input", answer: "4" },
+                { q: "Effect of exercise on heart rate?", type: "mc", options: ["Increases it", "Decreases it", "No effect", "Stops the heart"], answer: "Increases it" },
+            ]},
+            { name: "Evolution & Inheritance", questions: [
+                { q: "Who developed natural selection?", type: "mc", options: ["Charles Darwin", "Isaac Newton", "Albert Einstein", "Alexander Fleming"], answer: "Charles Darwin" },
+                { q: "What is adaptation?", type: "mc", options: ["Characteristic helping survival in environment", "A type of exercise", "A cooking method", "A maths technique"], answer: "Characteristic helping survival in environment" },
+                { q: "What is a fossil?", type: "mc", options: ["Preserved remains of ancient organism", "Building rock", "A living animal", "A crystal"], answer: "Preserved remains of ancient organism" },
+                { q: "Why do children look similar but not identical to parents?", type: "mc", options: ["Mix of characteristics from both parents", "Only look like mother", "They choose features", "All look the same"], answer: "Mix of characteristics from both parents" },
+                { q: "What does 'survival of the fittest' mean?", type: "mc", options: ["Best adapted are more likely to survive and reproduce", "Only strongest survive", "Only fast survive", "Exercise most survive"], answer: "Best adapted are more likely to survive and reproduce" },
+                { q: "Which is inherited?", type: "mc", options: ["Eye colour", "A scar", "Speaking French", "A haircut"], answer: "Eye colour" },
+                { q: "What is variation?", type: "mc", options: ["Differences between individuals of same species", "A type of music", "Moving to new habitat", "A fossil type"], answer: "Differences between individuals of same species" },
+                { q: "How do fossils help us understand evolution?", type: "mc", options: ["Show how organisms changed over millions of years", "Used for jewellery", "Tell us about weather", "No scientific value"], answer: "Show how organisms changed over millions of years" },
+            ]},
+            { name: "Light", questions: [
+                { q: "Light travels in...?", type: "mc", options: ["Straight lines", "Curved lines", "Zigzags", "Circles"], answer: "Straight lines" },
+                { q: "How do we see objects?", type: "mc", options: ["Light reflects off object into our eyes", "Eyes send out light beams", "Objects glow", "Sound carries image"], answer: "Light reflects off object into our eyes" },
+                { q: "Which is a light source?", type: "mc", options: ["The Sun", "The Moon", "A mirror", "A white wall"], answer: "The Sun" },
+                { q: "Why does the Moon appear to shine?", type: "mc", options: ["Reflects sunlight", "Makes own light", "Glowing rock", "Very close to Earth"], answer: "Reflects sunlight" },
+                { q: "What happens when light hits an opaque object?", type: "mc", options: ["Shadow forms — light can't pass through", "Light passes through", "Light disappears", "Object becomes transparent"], answer: "Shadow forms — light can't pass through" },
+                { q: "Light bouncing off a surface is called?", type: "mc", options: ["Reflection", "Refraction", "Absorption", "Diffraction"], answer: "Reflection" },
+                { q: "Colours of the rainbow?", type: "mc", options: ["Red, orange, yellow, green, blue, indigo, violet", "Red, blue, green", "Black, white, grey", "Pink, purple, gold"], answer: "Red, orange, yellow, green, blue, indigo, violet" },
+                { q: "Light source moves closer — shadow gets...?", type: "mc", options: ["Bigger", "Smaller", "Disappears", "Same"], answer: "Bigger" },
+            ]},
+            { name: "Electricity", questions: [
+                { q: "What makes a simple circuit?", type: "mc", options: ["Battery, wires, and component (bulb)", "Just a battery", "Just wires", "Magnet and bulb"], answer: "Battery, wires, and component (bulb)" },
+                { q: "Circuit symbol for a bulb?", type: "mc", options: ["Circle with cross inside", "Long and short line", "Two parallel lines", "Zigzag line"], answer: "Circle with cross inside" },
+                { q: "More batteries in a circuit — bulb gets...?", type: "mc", options: ["Brighter", "Dimmer", "No change", "Blue"], answer: "Brighter" },
+                { q: "Good electrical conductor?", type: "mc", options: ["Copper", "Rubber", "Plastic", "Wood"], answer: "Copper" },
+                { q: "What does a switch do?", type: "mc", options: ["Breaks or completes the circuit", "Makes bulb brighter", "Stores electricity", "Creates electricity"], answer: "Breaks or completes the circuit" },
+                { q: "Gap in a circuit — what happens?", type: "mc", options: ["Won't work — no current flows", "Works faster", "Bulb brighter", "Nothing"], answer: "Won't work — no current flows" },
+                { q: "Series vs parallel circuit?", type: "mc", options: ["Series: one loop; parallel: multiple paths", "Same thing", "Series uses more batteries", "Parallel has no wires"], answer: "Series: one loop; parallel: multiple paths" },
+                { q: "What is an electrical insulator?", type: "mc", options: ["Material that doesn't allow electricity through", "Conducts well", "A battery", "A circuit with no gaps"], answer: "Material that doesn't allow electricity through" },
+            ]},
+            { name: "Forces", questions: [
+                { q: "What is gravity?", type: "mc", options: ["Force pulling objects towards Earth's centre", "Force pushing away from Earth", "A type of electricity", "A light source"], answer: "Force pulling objects towards Earth's centre" },
+                { q: "What is friction?", type: "mc", options: ["Force that slows or stops moving objects", "Force that speeds things up", "A type of magnetism", "Makes things float"], answer: "Force that slows or stops moving objects" },
+                { q: "Most friction?", type: "mc", options: ["Rough sandpaper", "Smooth ice", "Polished glass", "Wet tile"], answer: "Rough sandpaper" },
+                { q: "What is air resistance?", type: "mc", options: ["Friction from air pushing against moving object", "Weight of air", "Air in a balloon", "How fast air moves"], answer: "Friction from air pushing against moving object" },
+                { q: "Why does a parachute slow you down?", type: "mc", options: ["Increases air resistance", "Increases gravity", "Makes you lighter", "Creates electricity"], answer: "Increases air resistance" },
+                { q: "Force is measured in?", type: "mc", options: ["Newtons (N)", "Kilograms (kg)", "Metres (m)", "Watts (W)"], answer: "Newtons (N)" },
+                { q: "What is water resistance?", type: "mc", options: ["Friction on objects moving through water", "How much water an object holds", "Weight of water", "How clear water is"], answer: "Friction on objects moving through water" },
+                { q: "Ball rolling on grass, nobody pushes — what happens?", type: "mc", options: ["Slows down and stops (friction)", "Keeps rolling forever", "Speeds up", "Floats upwards"], answer: "Slows down and stops (friction)" },
+            ]},
+            { name: "Earth & Space", questions: [
+                { q: "How long for Earth to orbit the Sun?", type: "mc", options: ["365.25 days (1 year)", "24 hours", "28 days", "12 hours"], answer: "365.25 days (1 year)" },
+                { q: "What causes day and night?", type: "mc", options: ["Earth rotating on its axis", "Sun moving around Earth", "Moon blocking Sun", "Clouds"], answer: "Earth rotating on its axis" },
+                { q: "Planet order from Sun?", type: "mc", options: ["Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune", "Venus, Mercury, Earth, Mars, Saturn, Jupiter, Neptune, Uranus", "Earth, Venus, Mercury, Mars, Jupiter, Saturn, Uranus, Neptune", "Mercury, Earth, Venus, Mars, Jupiter, Saturn, Neptune, Uranus"], answer: "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune" },
+                { q: "What is the Sun?", type: "mc", options: ["A star", "A planet", "A moon", "An asteroid"], answer: "A star" },
+                { q: "Why do we have seasons?", type: "mc", options: ["Earth's tilted axis as it orbits the Sun", "Sun gets hotter and colder", "Closer/further from Sun", "Because of the Moon"], answer: "Earth's tilted axis as it orbits the Sun" },
+                { q: "Shape of the Earth?", type: "mc", options: ["Sphere (roughly)", "Flat disc", "Perfect circle", "Cube"], answer: "Sphere (roughly)" },
+                { q: "Moon orbits Earth in...?", type: "mc", options: ["~28 days", "24 hours", "365 days", "7 days"], answer: "~28 days" },
+                { q: "Name of our galaxy?", type: "mc", options: ["The Milky Way", "Andromeda", "The Solar System", "The Big Dipper"], answer: "The Milky Way" },
+            ]},
+            { name: "Properties of Materials", questions: [
+                { q: "Property for being squashed?", type: "mc", options: ["Flexibility / compressibility", "Hardness", "Transparency", "Conductivity"], answer: "Flexibility / compressibility" },
+                { q: "Which change is reversible?", type: "mc", options: ["Melting chocolate", "Burning wood", "Cooking an egg", "Baking a cake"], answer: "Melting chocolate" },
+                { q: "What is an irreversible change?", type: "mc", options: ["Can't be undone to get original materials", "Easily reversed", "Freezing water", "Dissolving sugar"], answer: "Can't be undone to get original materials" },
+                { q: "What is a thermal conductor?", type: "mc", options: ["Lets heat pass through easily (e.g. metal)", "Blocks heat", "Floats", "Is transparent"], answer: "Lets heat pass through easily (e.g. metal)" },
+                { q: "Best material for a window?", type: "mc", options: ["Glass", "Cardboard", "Fabric", "Rubber"], answer: "Glass" },
+                { q: "Heat water to 100°C — what happens?", type: "mc", options: ["Boils into steam", "Freezes", "Nothing", "Turns to ice"], answer: "Boils into steam" },
+                { q: "Separate sand from water?", type: "mc", options: ["Filtering", "Heating", "Freezing", "Adding more sand"], answer: "Filtering" },
+                { q: "What is dissolving?", type: "mc", options: ["Solid mixes with liquid and seems to disappear", "Liquid freezes", "Solid melts", "Gas escapes"], answer: "Solid mixes with liquid and seems to disappear" },
+            ]}
+        ]
+    }
+];
+
+// ============================================================
+//  BADGES DEFINITION
+// ============================================================
+const BADGE_DEFS = [
+    { id: "first-quiz", icon: "🌟", name: "First Quiz", desc: "Complete your first quiz", check: s => s.quizzesDone >= 1 },
+    { id: "five-quizzes", icon: "📝", name: "Quiz Fan", desc: "Complete 5 quizzes", check: s => s.quizzesDone >= 5 },
+    { id: "ten-quizzes", icon: "🏆", name: "Quiz Champ", desc: "Complete 10 quizzes", check: s => s.quizzesDone >= 10 },
+    { id: "twenty-quizzes", icon: "👑", name: "Quiz Queen", desc: "Complete 20 quizzes", check: s => s.quizzesDone >= 20 },
+    { id: "ten-stars", icon: "⭐", name: "Star Starter", desc: "Earn 10 stars", check: s => s.totalStars >= 10 },
+    { id: "fifty-stars", icon: "🌠", name: "Star Collector", desc: "Earn 50 stars", check: s => s.totalStars >= 50 },
+    { id: "hundred-stars", icon: "💫", name: "Superstar", desc: "Earn 100 stars", check: s => s.totalStars >= 100 },
+    { id: "two-hundred-stars", icon: "🌈", name: "Star Legend", desc: "Earn 200 stars", check: s => s.totalStars >= 200 },
+    { id: "perfect-quiz", icon: "💯", name: "Perfect!", desc: "Get 100% on a quiz", check: s => s.hasPerfect },
+    { id: "maths-arith", icon: "➕", name: "Maths Whiz", desc: "Complete all Arithmetic topics", check: s => subjectDone("maths-arithmetic") },
+    { id: "maths-reason", icon: "🧩", name: "Reasoning Pro", desc: "Complete all Reasoning topics", check: s => subjectDone("maths-reasoning") },
+    { id: "english", icon: "📖", name: "Bookworm", desc: "Complete all Reading topics", check: s => subjectDone("english-reading") },
+    { id: "grammar", icon: "✏️", name: "Grammar Guru", desc: "Complete all Grammar topics", check: s => subjectDone("grammar-spelling") },
+    { id: "science", icon: "🔬", name: "Science Star", desc: "Complete all Science topics", check: s => subjectDone("science") },
+    { id: "all-done", icon: "🎓", name: "SATs Ready!", desc: "Complete every single topic", check: s => allSubjectsDone() },
+    { id: "streak-3", icon: "🔥", name: "On Fire!", desc: "3-day streak", check: s => s.streak >= 3 },
+    { id: "streak-7", icon: "🔥", name: "Week Warrior", desc: "7-day streak", check: s => s.streak >= 7 },
+];
+
+// ============================================================
+//  TREATS
+// ============================================================
+const DEFAULT_TREATS = [
+    { icon: "🍦", name: "Ice Cream Trip", stars: 25 },
+    { icon: "🎬", name: "Movie Night", stars: 50 },
+    { icon: "🛍️", name: "Shopping Trip", stars: 100 },
+    { icon: "🎢", name: "Day Out Adventure", stars: 200 },
+];
+let TREATS = loadTreats();
+function loadTreats() {
+    try {
+        const saved = localStorage.getItem("sats-treats");
+        if (saved) return JSON.parse(saved);
+    } catch(e) {}
+    return JSON.parse(JSON.stringify(DEFAULT_TREATS));
+}
+function saveTreats() {
+    try { localStorage.setItem("sats-treats", JSON.stringify(TREATS)); } catch(e) {}
+}
+
+// ============================================================
+//  OCTOPUS LEVELS
+// ============================================================
+const OCTO_LEVELS = [
+    { name: "Tiny Baby", starsNeeded: 0, size: 80, tentacles: 4, color: "#e8a0d0" },
+    { name: "Little One", starsNeeded: 10, size: 100, tentacles: 5, color: "#d88bc0" },
+    { name: "Growing Up", starsNeeded: 25, size: 120, tentacles: 6, color: "#c87ab0" },
+    { name: "Getting Big", starsNeeded: 50, size: 145, tentacles: 7, color: "#b86aa0" },
+    { name: "Nearly Grown", starsNeeded: 80, size: 170, tentacles: 8, color: "#a85a90" },
+    { name: "Big & Strong", starsNeeded: 120, size: 195, tentacles: 8, color: "#9850a0" },
+    { name: "Mighty Octo", starsNeeded: 170, size: 220, tentacles: 8, color: "#8840b0" },
+    { name: "JUMBO OCTAVIA", starsNeeded: 250, size: 260, tentacles: 8, color: "#7830c0" },
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+let state = {
+    currentSubject: null, currentTopic: null, currentQuestionIdx: 0,
+    answers: [], answered: false,
+    progress: {},  // "subjectId:topicIdx": { best, total }
+    totalStars: 0, quizzesDone: 0, badges: [], streak: 0, lastPlayDate: null,
+    hasPerfect: false,
+    octoName: "Octavia"
+};
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem("sats-state-v2");
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            Object.assign(state, parsed);
+        }
+    } catch(e) {}
+}
+function saveState() {
+    try {
+        localStorage.setItem("sats-state-v2", JSON.stringify({
+            progress: state.progress, totalStars: state.totalStars,
+            quizzesDone: state.quizzesDone, badges: state.badges,
+            streak: state.streak, lastPlayDate: state.lastPlayDate,
+            hasPerfect: state.hasPerfect, octoName: state.octoName
+        }));
+    } catch(e) {}
+}
+loadState();
+
+// Update streak
+function updateStreak() {
+    const today = new Date().toDateString();
+    if (state.lastPlayDate === today) return;
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (state.lastPlayDate === yesterday) {
+        state.streak++;
+    } else if (state.lastPlayDate !== today) {
+        state.streak = 1;
+    }
+    state.lastPlayDate = today;
+    saveState();
+}
+
+// ============================================================
+//  HELPER: subject completion
+// ============================================================
+function subjectDone(subId) {
+    const sub = SUBJECTS.find(s => s.id === subId);
+    if (!sub) return false;
+    return sub.topics.every((t, ti) => {
+        const key = subId + ":" + ti;
+        return state.progress[key] && state.progress[key].best >= Math.ceil(t.questions.length * 0.6);
+    });
+}
+function allSubjectsDone() {
+    return SUBJECTS.every(s => subjectDone(s.id));
+}
+
+// ============================================================
+//  OCTOPUS DRAWING (SVG)
+// ============================================================
+function getOctoLevel() {
+    let lvl = 0;
+    for (let i = OCTO_LEVELS.length - 1; i >= 0; i--) {
+        if (state.totalStars >= OCTO_LEVELS[i].starsNeeded) { lvl = i; break; }
+    }
+    return lvl;
+}
+
+function drawOctopus() {
+    const lvl = getOctoLevel();
+    const o = OCTO_LEVELS[lvl];
+    const size = o.size;
+    const half = size / 2;
+    const bodyH = size * 0.45;
+    const bodyW = size * 0.5;
+    const eyeSize = size * 0.06;
+    const earSize = size * 0.18;
+
+    // Build tentacles
+    let tentaclesSvg = "";
+    const tentCount = o.tentacles;
+    const spread = bodyW * 1.6;
+    for (let i = 0; i < tentCount; i++) {
+        const t = i / (tentCount - 1);
+        const x = half - spread/2 + t * spread;
+        const baseY = half + bodyH * 0.3;
+        const tipY = baseY + size * 0.35;
+        const curve = (t - 0.5) * size * 0.4;
+        const wave = Math.sin(i * 1.5) * size * 0.1;
+        tentaclesSvg += `<path d="M${x},${baseY} Q${x + curve + wave},${(baseY+tipY)/2} ${x + curve * 0.5},${tipY}" stroke="${o.color}" stroke-width="${size*0.06}" fill="none" stroke-linecap="round" opacity="0.9"/>`;
+    }
+
+    const svg = `<svg class="octo-svg" width="${size}" height="${size * 1.1}" viewBox="0 0 ${size} ${size * 1.1}">
+        <!-- Ears -->
+        <ellipse cx="${half - bodyW * 0.7}" cy="${half - bodyH * 0.2}" rx="${earSize}" ry="${earSize * 0.7}" fill="${o.color}" opacity="0.6" transform="rotate(-20 ${half - bodyW*0.7} ${half - bodyH*0.2})"/>
+        <ellipse cx="${half + bodyW * 0.7}" cy="${half - bodyH * 0.2}" rx="${earSize}" ry="${earSize * 0.7}" fill="${o.color}" opacity="0.6" transform="rotate(20 ${half + bodyW*0.7} ${half - bodyH*0.2})"/>
+        <!-- Inner ears -->
+        <ellipse cx="${half - bodyW * 0.7}" cy="${half - bodyH * 0.2}" rx="${earSize*0.6}" ry="${earSize * 0.4}" fill="#f8c8e0" opacity="0.7" transform="rotate(-20 ${half - bodyW*0.7} ${half - bodyH*0.2})"/>
+        <ellipse cx="${half + bodyW * 0.7}" cy="${half - bodyH * 0.2}" rx="${earSize*0.6}" ry="${earSize * 0.4}" fill="#f8c8e0" opacity="0.7" transform="rotate(20 ${half + bodyW*0.7} ${half - bodyH*0.2})"/>
+        <!-- Body -->
+        <ellipse cx="${half}" cy="${half}" rx="${bodyW}" ry="${bodyH}" fill="${o.color}"/>
+        <!-- Sheen -->
+        <ellipse cx="${half - bodyW*0.2}" cy="${half - bodyH*0.3}" rx="${bodyW*0.25}" ry="${bodyH*0.2}" fill="white" opacity="0.25"/>
+        <!-- Eyes -->
+        <circle cx="${half - bodyW*0.3}" cy="${half - bodyH*0.05}" r="${eyeSize*1.4}" fill="white"/>
+        <circle cx="${half + bodyW*0.3}" cy="${half - bodyH*0.05}" r="${eyeSize*1.4}" fill="white"/>
+        <circle cx="${half - bodyW*0.28}" cy="${half - bodyH*0.02}" r="${eyeSize}" fill="#333"/>
+        <circle cx="${half + bodyW*0.28}" cy="${half - bodyH*0.02}" r="${eyeSize}" fill="#333"/>
+        <circle cx="${half - bodyW*0.26}" cy="${half - bodyH*0.08}" r="${eyeSize*0.35}" fill="white"/>
+        <circle cx="${half + bodyW*0.26}" cy="${half - bodyH*0.08}" r="${eyeSize*0.35}" fill="white"/>
+        <!-- Smile -->
+        <path d="M${half - bodyW*0.15},${half + bodyH*0.2} Q${half},${half + bodyH*0.4} ${half + bodyW*0.15},${half + bodyH*0.2}" stroke="#fff" stroke-width="${size*0.025}" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <!-- Cheeks -->
+        <ellipse cx="${half - bodyW*0.45}" cy="${half + bodyH*0.15}" rx="${eyeSize}" ry="${eyeSize*0.6}" fill="#f8a0c0" opacity="0.5"/>
+        <ellipse cx="${half + bodyW*0.45}" cy="${half + bodyH*0.15}" rx="${eyeSize}" ry="${eyeSize*0.6}" fill="#f8a0c0" opacity="0.5"/>
+        <!-- Tentacles -->
+        ${tentaclesSvg}
+    </svg>`;
+
+    document.getElementById("octo-body").innerHTML = svg;
+
+    // Level info
+    const nextLvl = lvl < OCTO_LEVELS.length - 1 ? OCTO_LEVELS[lvl + 1] : null;
+    document.getElementById("octo-name").textContent = state.octoName;
+    document.getElementById("octo-level").textContent = `Level ${lvl + 1} — ${o.name}`;
+
+    if (nextLvl) {
+        const progress = state.totalStars - o.starsNeeded;
+        const needed = nextLvl.starsNeeded - o.starsNeeded;
+        const pct = Math.min(100, Math.round((progress / needed) * 100));
+        document.getElementById("octo-xp-fill").style.width = pct + "%";
+        document.getElementById("octo-xp-text").textContent = `${state.totalStars} / ${nextLvl.starsNeeded} stars to next level`;
+    } else {
+        document.getElementById("octo-xp-fill").style.width = "100%";
+        document.getElementById("octo-xp-text").textContent = `MAX LEVEL! ${state.totalStars} stars earned!`;
+    }
+}
+
+// ============================================================
+//  NOTIFICATIONS
+// ============================================================
+function showNotification(text) {
+    const el = document.getElementById("notification");
+    el.textContent = text;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 3000);
+}
+
+// ============================================================
+//  STAR SHOWER
+// ============================================================
+function triggerStarShower(count) {
+    const div = document.createElement("div");
+    div.className = "star-shower";
+    document.body.appendChild(div);
+    const emojis = ["⭐", "🌟", "✨", "💫"];
+    for (let i = 0; i < Math.min(count * 3, 30); i++) {
+        const star = document.createElement("div");
+        star.className = "falling-star";
+        star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        star.style.left = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 1.5 + "s";
+        star.style.fontSize = (16 + Math.random() * 20) + "px";
+        div.appendChild(star);
+    }
+    setTimeout(() => div.remove(), 4000);
+}
+
+// ============================================================
+//  CHECK BADGES
+// ============================================================
+function checkBadges() {
+    const stats = {
+        totalStars: state.totalStars,
+        quizzesDone: state.quizzesDone,
+        hasPerfect: state.hasPerfect,
+        streak: state.streak
+    };
+    let newBadges = [];
+    BADGE_DEFS.forEach(b => {
+        if (!state.badges.includes(b.id) && b.check(stats)) {
+            state.badges.push(b.id);
+            newBadges.push(b);
+        }
+    });
+    if (newBadges.length > 0) {
+        saveState();
+        newBadges.forEach((b, i) => {
+            setTimeout(() => showNotification(`🏅 Badge unlocked: ${b.icon} ${b.name}!`), i * 2000);
+        });
+    }
+    return newBadges;
+}
+
+// ============================================================
+//  RENDER FUNCTIONS
+// ============================================================
+function showScreen(id) {
+    ["screen-home","screen-topics","screen-quiz","screen-results"].forEach(s => {
+        document.getElementById(s).classList.toggle("hidden", s !== id);
+    });
+    window.scrollTo(0, 0);
+}
+
+function renderHome() {
+    showScreen("screen-home");
+
+    // Draw octopus
+    drawOctopus();
+
+    // Stats
+    document.getElementById("total-stars").textContent = state.totalStars;
+    document.getElementById("total-badges").textContent = state.badges.length;
+    document.getElementById("total-streak").textContent = state.streak;
+    document.getElementById("total-quizzes").textContent = state.quizzesDone;
+
+    // Treats
+    const treatsList = document.getElementById("treats-list");
+    treatsList.innerHTML = "";
+    TREATS.forEach(t => {
+        const earned = state.totalStars >= t.stars;
+        const pct = Math.min(100, Math.round((state.totalStars / t.stars) * 100));
+        const item = document.createElement("div");
+        item.className = "treat-item" + (earned ? " earned" : "");
+        item.innerHTML = `
+            <div class="treat-icon">${t.icon}</div>
+            <div class="treat-info">
+                <div class="treat-name">${t.name}${earned ? " — EARNED!" : ""}</div>
+                <div class="treat-progress-outer"><div class="treat-progress-inner" style="width:${pct}%"></div></div>
+            </div>
+            <div class="treat-count">${Math.min(state.totalStars, t.stars)} / ${t.stars} ⭐</div>
+        `;
+        treatsList.appendChild(item);
+    });
+
+    // Badges
+    const badgesGrid = document.getElementById("badges-grid");
+    badgesGrid.innerHTML = "";
+    BADGE_DEFS.forEach(b => {
+        const unlocked = state.badges.includes(b.id);
+        const badge = document.createElement("div");
+        badge.className = "badge " + (unlocked ? "unlocked" : "locked");
+        badge.title = b.desc;
+        badge.innerHTML = `${b.icon}<div class="badge-name">${b.name}</div>`;
+        badgesGrid.appendChild(badge);
+    });
+
+    // Subject grid
+    const grid = document.getElementById("subject-grid");
+    grid.innerHTML = "";
+    let totalQ = 0, totalCorrect = 0;
+
+    SUBJECTS.forEach(sub => {
+        let subQ = 0, subCorrect = 0;
+        sub.topics.forEach((topic, ti) => {
+            const key = sub.id + ":" + ti;
+            const qCount = topic.questions.length;
+            subQ += qCount; totalQ += qCount;
+            if (state.progress[key]) { subCorrect += state.progress[key].best; totalCorrect += state.progress[key].best; }
+        });
+        const pct = subQ > 0 ? Math.round((subCorrect / subQ) * 100) : 0;
+        const card = document.createElement("div");
+        card.className = "subject-card";
+        card.onclick = () => showSubject(sub.id);
+        card.innerHTML = `
+            <div class="icon">${sub.icon}</div>
+            <div class="name">${sub.name}</div>
+            <div class="topic-count">${sub.topics.length} topics</div>
+            <div class="card-progress-outer"><div class="card-progress-inner" style="width:${pct}%"></div></div>
+            <div class="card-pct">${pct}%</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    const overallPct = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+    document.getElementById("overall-progress").style.width = overallPct + "%";
+    document.getElementById("overall-pct").textContent = overallPct + "% complete";
+}
+
+function showHome() { renderHome(); }
+
+function showSubject(subjectId) {
+    const sub = SUBJECTS.find(s => s.id === subjectId);
+    if (!sub) return;
+    state.currentSubject = sub;
+    showScreen("screen-topics");
+    document.getElementById("subject-title").textContent = sub.icon + " " + sub.name;
+
+    let subQ = 0, subCorrect = 0;
+    const list = document.getElementById("topic-list");
+    list.innerHTML = "";
+
+    sub.topics.forEach((topic, ti) => {
+        const key = sub.id + ":" + ti;
+        const qCount = topic.questions.length;
+        subQ += qCount;
+        const best = state.progress[key] ? state.progress[key].best : 0;
+        subCorrect += best;
+        const done = best === qCount;
+
+        const card = document.createElement("div");
+        card.className = "topic-card";
+        card.onclick = () => startQuiz(sub, ti);
+        card.innerHTML = `
+            <div class="topic-info">
+                <div class="topic-name">${topic.name}</div>
+                <div class="topic-qcount">${qCount} questions</div>
+            </div>
+            <div class="topic-score ${done ? 'done' : ''}">${best}/${qCount}</div>
+        `;
+        list.appendChild(card);
+    });
+
+    const pct = subQ > 0 ? Math.round((subCorrect / subQ) * 100) : 0;
+    document.getElementById("subject-progress").style.width = pct + "%";
+    document.getElementById("subject-pct").textContent = pct + "% complete";
+}
+
+function backToTopics() { state.currentSubject ? showSubject(state.currentSubject.id) : showHome(); }
+
+// ============================================================
+//  QUIZ
+// ============================================================
+function startQuiz(subject, topicIdx) {
+    state.currentSubject = subject;
+    state.currentTopic = topicIdx;
+    state.currentQuestionIdx = 0;
+    state.answers = [];
+    state.answered = false;
+    const topic = subject.topics[topicIdx];
+    topic._shuffled = [...topic.questions].sort(() => Math.random() - 0.5);
+    showScreen("screen-quiz");
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const topic = state.currentSubject.topics[state.currentTopic];
+    const questions = topic._shuffled || topic.questions;
+    const qIdx = state.currentQuestionIdx;
+    const q = questions[qIdx];
+    const total = questions.length;
+    state.answered = false;
+
+    document.getElementById("q-counter").textContent = `Question ${qIdx + 1} of ${total}`;
+    document.getElementById("quiz-progress").style.width = ((qIdx / total) * 100) + "%";
+
+    const ctxArea = document.getElementById("q-context-area");
+    ctxArea.innerHTML = q.context ? `<div class="question-box"><div class="q-context">${q.context}</div></div>` : "";
+
+    document.getElementById("q-text").textContent = q.q;
+    const hintEl = document.getElementById("q-hint");
+    if (q.hint) { hintEl.textContent = q.hint; hintEl.classList.remove("hidden"); }
+    else { hintEl.classList.add("hidden"); }
+
+    const optionsDiv = document.getElementById("q-options");
+    const inputArea = document.getElementById("q-input-area");
+    const inputEl = document.getElementById("q-input");
+
+    if (q.type === "mc") {
+        inputArea.classList.add("hidden");
+        const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+        optionsDiv.innerHTML = "";
+        optionsDiv.className = "options-list";
+        shuffledOpts.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.textContent = opt;
+            btn.onclick = () => selectOption(btn);
+            optionsDiv.appendChild(btn);
+        });
+    } else {
+        optionsDiv.innerHTML = "";
+        inputArea.classList.remove("hidden");
+        inputEl.value = "";
+        inputEl.focus();
+    }
+
+    document.getElementById("feedback").className = "feedback";
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("btn-submit").classList.remove("hidden");
+    document.getElementById("btn-submit").disabled = false;
+    document.getElementById("btn-next").classList.add("hidden");
+}
+
+function selectOption(btn) {
+    if (state.answered) return;
+    document.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+}
+
+function submitAnswer() {
+    if (state.answered) return;
+    const topic = state.currentSubject.topics[state.currentTopic];
+    const questions = topic._shuffled || topic.questions;
+    const q = questions[state.currentQuestionIdx];
+    let userAnswer = "";
+
+    if (q.type === "mc") {
+        const selected = document.querySelector(".option-btn.selected");
+        if (!selected) return;
+        userAnswer = selected.textContent;
+    } else {
+        userAnswer = document.getElementById("q-input").value.trim();
+        if (!userAnswer) return;
+    }
+
+    state.answered = true;
+    const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(q.answer);
+    state.answers.push({ question: q, selected: userAnswer, correct: isCorrect });
+
+    const fb = document.getElementById("feedback");
+    if (isCorrect) {
+        fb.className = "feedback correct";
+        fb.innerHTML = '<span class="star-burst">⭐</span> Correct! +1 star!';
+    } else {
+        fb.className = "feedback wrong";
+        fb.textContent = `Not quite. The answer is: ${q.answer}`;
+    }
+
+    if (q.type === "mc") {
+        document.querySelectorAll(".option-btn").forEach(btn => {
+            btn.style.pointerEvents = "none";
+            if (normalizeAnswer(btn.textContent) === normalizeAnswer(q.answer)) btn.classList.add("correct");
+            else if (btn.classList.contains("selected") && !isCorrect) btn.classList.add("wrong");
+        });
+    }
+
+    document.getElementById("btn-submit").classList.add("hidden");
+    document.getElementById("btn-next").classList.remove("hidden");
+}
+
+function normalizeAnswer(s) {
+    return String(s).toLowerCase().replace(/[£,\s]/g, "").replace(/\u00a3/g, "");
+}
+
+function nextQuestion() {
+    const topic = state.currentSubject.topics[state.currentTopic];
+    const questions = topic._shuffled || topic.questions;
+    state.currentQuestionIdx++;
+    if (state.currentQuestionIdx >= questions.length) showResults();
+    else renderQuestion();
+}
+
+function exitQuiz() { backToTopics(); }
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        if (!state.answered && !document.getElementById("screen-quiz").classList.contains("hidden")) submitAnswer();
+        else if (state.answered && !document.getElementById("btn-next").classList.contains("hidden")) nextQuestion();
+    }
+});
+
+// ============================================================
+//  RESULTS
+// ============================================================
+function showResults() {
+    showScreen("screen-results");
+
+    const correct = state.answers.filter(a => a.correct).length;
+    const total = state.answers.length;
+    const pct = Math.round((correct / total) * 100);
+
+    // Award stars (1 per correct answer)
+    const starsEarned = correct;
+    state.totalStars += starsEarned;
+    state.quizzesDone++;
+    if (pct === 100) state.hasPerfect = true;
+
+    // Update streak
+    updateStreak();
+
+    // Save best score
+    const key = state.currentSubject.id + ":" + state.currentTopic;
+    const prev = state.progress[key] ? state.progress[key].best : 0;
+    if (correct > prev) state.progress[key] = { best: correct, total: total };
+    saveState();
+
+    // Check for level up
+    const prevLevel = getOctoLevelForStars(state.totalStars - starsEarned);
+    const newLevel = getOctoLevel();
+    if (newLevel > prevLevel) {
+        setTimeout(() => {
+            showNotification(`🎉 ${state.octoName} grew to Level ${newLevel + 1}: ${OCTO_LEVELS[newLevel].name}!`);
+            const container = document.getElementById("octo-container");
+            if (container) { container.classList.add("pop"); setTimeout(() => container.classList.remove("pop"), 500); }
+        }, 500);
+    }
+
+    // Check badges
+    setTimeout(() => checkBadges(), 1500);
+
+    // Star shower!
+    if (starsEarned > 0) triggerStarShower(starsEarned);
+
+    document.getElementById("result-score").textContent = `${correct} / ${total}`;
+    document.getElementById("stars-earned").innerHTML = `⭐ +${starsEarned} stars earned! (Total: ${state.totalStars})`;
+
+    let msg = "";
+    if (pct === 100) msg = "Perfect score! You're a superstar! ⭐";
+    else if (pct >= 80) msg = "Brilliant work! Nearly perfect!";
+    else if (pct >= 60) msg = "Good effort! Keep practising!";
+    else if (pct >= 40) msg = "Nice try! A bit more practice and you'll get there!";
+    else msg = "Keep going! Practice makes progress!";
+    document.getElementById("result-msg").textContent = msg;
+
+    const list = document.getElementById("results-list");
+    list.innerHTML = "<h3 style='margin-bottom:12px; color:#6d3a5a;'>Review your answers:</h3>";
+    state.answers.forEach((a, i) => {
+        const item = document.createElement("div");
+        item.className = "result-item " + (a.correct ? "was-correct" : "was-wrong");
+        item.innerHTML = `
+            <div class="ri-q">${i + 1}. ${a.question.q}</div>
+            ${a.correct
+                ? `<div class="ri-correct">✓ ${a.selected}</div>`
+                : `<div class="ri-yours">✗ Your answer: ${a.selected}</div><div class="ri-correct">✓ Correct: ${a.question.answer}</div>`
+            }
+        `;
+        list.appendChild(item);
+    });
+}
+
+function getOctoLevelForStars(stars) {
+    let lvl = 0;
+    for (let i = OCTO_LEVELS.length - 1; i >= 0; i--) {
+        if (stars >= OCTO_LEVELS[i].starsNeeded) { lvl = i; break; }
+    }
+    return lvl;
+}
+
+function retryQuiz() { startQuiz(state.currentSubject, state.currentTopic); }
+
+// ============================================================
+//  INIT
+// ============================================================
+renderHome();
+</script>
+</body>
+</html>
