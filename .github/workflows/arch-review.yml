@@ -1,0 +1,13 @@
+name: Architecture Review
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 6am UTC
+
+jobs:
+  review:
+    uses: harnessthespark/.github/.github/workflows/arch-review.yml@main
